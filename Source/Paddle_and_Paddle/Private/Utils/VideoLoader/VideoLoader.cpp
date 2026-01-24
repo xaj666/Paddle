@@ -1515,7 +1515,7 @@ void UGiftVideoPool::PlayNextInQueue(int32 QueueID)
         {
             ScheduleLogicCall(Item.GiftEnumValue, j + 1, 0.0f, Item.LogicDelayTime);
         }
-
+        
         int32 CompletedIndex = Queue->CurrentIndex;
 
         // 广播单个项目完成（SlotIndex 为 INDEX_NONE 表示无视频）
@@ -1606,7 +1606,7 @@ void UGiftVideoPool::PlayNextInQueue(int32 QueueID)
     // 触发逻辑调用
     for (int32 j = 0; j < Item.LogicCallCount; ++j)
     {
-        ScheduleLogicCall(Item.GiftEnumValue, j + 1, 0.0f, Item.IntervalFromBar);
+        ScheduleLogicCall(Item.GiftEnumValue, j + 1, 0.0f, 0);
     }
 
     // 打开并播放
@@ -1797,7 +1797,7 @@ void UMediaEndProxy::OnProxyMediaOpened(FString OpenedUrl)
 
 void UMediaEndProxy::OnProxyMediaEnd()
 {
-    // [Claude] 防重入：检查是否是短时间内的重复调用
+    // 防重入：检查是否是短时间内的重复调用
     double CurrentTime = FPlatformTime::Seconds();
     if (LastEndTime > 0.0 && (CurrentTime - LastEndTime) < END_DEBOUNCE_THRESHOLD)
     {
@@ -1806,7 +1806,6 @@ void UMediaEndProxy::OnProxyMediaEnd()
         return;
     }
     LastEndTime = CurrentTime;
-    // [Claude] 防重入逻辑结束
 
     if (UGiftVideoPool* Pool = OwnerPool.Get())
     {
@@ -2041,28 +2040,28 @@ void UGiftVideoPool::HandleTriggerItemCompleted(int32 QueueID, int32 ItemIndex, 
         Context->TriggerType == ETriggerType::Box ? TEXT("Box") : TEXT("Special"),
         CurrentGiftEnum, CurrentLogicOffset);
 
-    // 根据类型广播不同的委托
-    if (Context->TriggerType == ETriggerType::Box)
-    {
-        // 广播 Box 逻辑触发委托
-        // 参数: GiftEnum, ActivateTime(第几次激活，从1开始), LogicStartTimeOffset, VideoTimeInterval
-        OnBoxGiftLogicTrigger.Broadcast(
-            CurrentGiftEnum,
-            ItemIndex + 1,  // ActivateTime 从 1 开始
-            CurrentLogicOffset,
-            Context->Interval
-        );
-    }
-    else // ETriggerType::Special
-    {
-        // 广播 Special 逻辑触发委托
-        OnSpecialGiftLogicTrigger.Broadcast(
-            CurrentGiftEnum,
-            ItemIndex + 1,
-            CurrentLogicOffset,
-            Context->Interval
-        );
-    }
+    //// 根据类型广播不同的委托
+    //if (Context->TriggerType == ETriggerType::Box)
+    //{
+    //    // 广播 Box 逻辑触发委托
+    //    // 参数: GiftEnum, ActivateTime(第几次激活，从1开始), LogicStartTimeOffset, VideoTimeInterval
+    //    OnBoxGiftLogicTrigger.Broadcast(
+    //        CurrentGiftEnum,
+    //        ItemIndex + 1,  // ActivateTime 从 1 开始
+    //        CurrentLogicOffset,
+    //        Context->Interval
+    //    );
+    //}
+    //else // ETriggerType::Special
+    //{
+    //    // 广播 Special 逻辑触发委托
+    //    OnSpecialGiftLogicTrigger.Broadcast(
+    //        CurrentGiftEnum,
+    //        ItemIndex + 1,
+    //        CurrentLogicOffset,
+    //        Context->Interval
+    //    );
+    //}
 
     // 检查队列是否已完成（如果 Queue 为空说明已被清理）
     if (!Queue || !Queue->bIsPlaying)
@@ -2297,41 +2296,133 @@ void UGiftVideoPool::HandleSingleGiftItemCompleted(int32 QueueID, int32 ItemInde
 // ========== [Claude] Box/Special Trigger 排队系统实现 ==========
 
 TArray<FSequentialPlayItem> UGiftVideoPool::BuildTriggerItems(
+    const TArray<FString>& CallNames,
     const TArray<uint8>& GiftEnums,
     const TArray<float>& LogicStartOffsets,
     float Interval,
     int32 LoopCount,
-    const FString& AnimName)
+    const FString& AnimName,
+    bool isSpecial
+    )
 {
     TArray<FSequentialPlayItem> Items;
 
-    // [Claude] 查找视频源
-    UFileMediaSource* MediaSource = FindMediaSourceByName(AnimName);
 
-    // [Claude] 构建播放项：循环 LoopCount 次，每次遍历 GiftEnums
-    for (int32 i = 0; i < LoopCount; ++i)
+    if (CallNames.Num() == 0)
     {
-        for (int32 j = 0; j < GiftEnums.Num(); ++j)
+        UE_LOG(LogTemp, Warning, TEXT("CallNames数组为空！"));
+        return Items; 
+    }
+
+    if (isSpecial)
+    {
+        UFileMediaSource* IntroSource = nullptr;
+        if (!AnimName.IsEmpty() && AnimName != TEXT("无"))
         {
+            IntroSource = FindMediaSourceByName(AnimName);
+            if (!IntroSource)
+            {
+                UE_LOG(LogTemp, Warning, TEXT("[Claude][Trigger] Intro AnimName not found: %s"), *AnimName);
+            }
+        }
+
+        for (int32 i = 0; i < LoopCount; ++i)
+        {
+            if (IntroSource)
+            {
+                FSequentialPlayItem VideoItem;
+                VideoItem.MediaSource = IntroSource;
+                VideoItem.GiftEnumValue = 0; 
+                VideoItem.LogicCallCount = 0;
+                VideoItem.LogicDelayTime = 0.0f;
+                VideoItem.NoVideoDuration = 0.0f;
+                VideoItem.bUseCustomUIConfig = false;
+                VideoItem.IntervalFromBar = 0.0f;
+                VideoItem.bWaitForVideoEnd = true; 
+
+                Items.Add(VideoItem);
+                UE_LOG(LogTemp, Log, TEXT("[Claude][Trigger] Added intro AnimName item: %s"), *AnimName);
+            }
+
+            for (int32 j = 0; j < GiftEnums.Num(); ++j)
+            {
+                // [Claude] 查找视频源
+                UFileMediaSource* MediaSource = FindMediaSourceByName(CallNames[j]);
+
+                FSequentialPlayItem Item;
+                Item.MediaSource = MediaSource;
+                Item.GiftEnumValue = GiftEnums[j];
+                Item.LogicCallCount = 1;
+                Item.LogicDelayTime = (LogicStartOffsets.IsValidIndex(j)) ? LogicStartOffsets[j] : 0.0f;
+
+                Item.NoVideoDuration = (j == GiftEnums.Num() - 1) ? Interval : 0.0f;
+                Item.bUseCustomUIConfig = false;
+                Item.IntervalFromBar = (j == GiftEnums.Num() - 1) ? Interval : 0.0f;
+                Item.bWaitForVideoEnd = false;
+
+                Items.Add(Item);
+                UE_LOG(LogTemp, Warning, TEXT("[Claude][Trigger] Added special logic item: %d"), GiftEnums[j]);
+            }
+        }
+    }
+    else
+    {
+        // [Claude] 构建播放项：循环 LoopCount 次，每次遍历 GiftEnums
+        for (int32 i = 0; i < LoopCount; ++i)
+        {
+            if (!AnimName.IsEmpty() && AnimName != TEXT("无"))
+            {
+                UFileMediaSource* IntroSource = FindMediaSourceByName(AnimName);
+                if (IntroSource)
+                {
+                    FSequentialPlayItem IntroItem;
+                    IntroItem.MediaSource = IntroSource;
+                    IntroItem.GiftEnumValue = 0; 
+                    IntroItem.LogicCallCount = 0;
+                    IntroItem.LogicDelayTime = 0.0f;
+                    IntroItem.NoVideoDuration = 0.0f;
+                    IntroItem.bUseCustomUIConfig = false;
+                    IntroItem.IntervalFromBar = 0.0f;
+                    IntroItem.bWaitForVideoEnd = true; 
+
+                    Items.Add(IntroItem);
+                    UE_LOG(LogTemp, Log, TEXT("[Claude][Trigger] Added intro AnimName item: %s"), *AnimName);
+                }
+                else
+                {
+                    UE_LOG(LogTemp, Warning, TEXT("[Claude][Trigger] Intro AnimName not found: %s"), *AnimName);
+                }
+            }
+            
+            int32 RandomIndex = FMath::RandRange(0, CallNames.Num() - 1);
+            // [Claude] 查找视频源
+            UFileMediaSource* MediaSource = FindMediaSourceByName(CallNames[RandomIndex]);
+
             FSequentialPlayItem Item;
             Item.MediaSource = MediaSource;
-            Item.GiftEnumValue = GiftEnums[j];
+            Item.GiftEnumValue = GiftEnums[RandomIndex];
             Item.LogicCallCount = 1;
-            Item.LogicDelayTime = (LogicStartOffsets.IsValidIndex(j)) ? LogicStartOffsets[j] : 0.0f;
+            Item.LogicDelayTime = (LogicStartOffsets.IsValidIndex(RandomIndex)) ? LogicStartOffsets[RandomIndex] : 0.0f;
             Item.NoVideoDuration = Interval;
             Item.bUseCustomUIConfig = false;
             Item.IntervalFromBar = Interval;
             Item.bWaitForVideoEnd = false;
 
+            Item.NoVideoDuration = (RandomIndex == GiftEnums.Num() - 1) ? Interval : 0.0f;
             Items.Add(Item);
+            UE_LOG(LogTemp, Warning, TEXT("选择了: %d"), GiftEnums[RandomIndex]);
+            
         }
     }
+
+
 
     return Items;
 }
 
 
 void UGiftVideoPool::EnqueueBoxTrigger(
+    const TArray<FString>& CallNames,
     const TArray<uint8>& GiftEnums,
     const TArray<float>& LogicStartOffsets,
     float Interval,
@@ -2350,11 +2441,13 @@ void UGiftVideoPool::EnqueueBoxTrigger(
 
     // [Claude] 构建播放项列表（倍率 × 原始循环次数）
     TArray<FSequentialPlayItem> NewItems = BuildTriggerItems(
+        CallNames,
         GiftEnums,
         LogicStartOffsets,
         Interval,
         RandomTimes * Multiplier,  // 倍率影响循环次数
-        GiftName
+        GiftName,
+        false
     );
 
     // [Claude] 检查该类型是否已有活跃队列
@@ -2413,6 +2506,7 @@ void UGiftVideoPool::EnqueueBoxTrigger(
 
 
 void UGiftVideoPool::EnqueueSpecialTrigger(
+    const TArray<FString>& CallNames,
     const TArray<uint8>& GiftEnums,
     const TArray<float>& LogicStartOffsets,
     float Interval,
@@ -2431,14 +2525,16 @@ void UGiftVideoPool::EnqueueSpecialTrigger(
 
     // [Claude] 构建播放项列表（倍率 × 原始触发次数）
     TArray<FSequentialPlayItem> NewItems = BuildTriggerItems(
+        CallNames,
         GiftEnums,
         LogicStartOffsets,
         Interval,
         TriggerTime * Multiplier,  // 倍率影响触发次数
-        GiftName
+        GiftName,
+        true
     );
 
-    // [Claude] 检查该类型是否已有活跃队列
+    // [Claude] 检查该类型是否已有活跃队列Gi
     int32* ExistingQueueIDPtr = SpecialTriggerToQueueMap.Find(GiftName);
 
     if (ExistingQueueIDPtr)

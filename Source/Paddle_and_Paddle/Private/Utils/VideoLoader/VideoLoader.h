@@ -30,29 +30,29 @@ class UAudioComponent;
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnVideoEndedSignature, int32, SlotIndex);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnVideoReadyToShow, int32, SlotIndex, UUserWidget*, VideoUI);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnBatchPlayCompleted);
-// Âß¼­´¥·¢Î¯ÍÐ - ÓÃÓÚÍ¨ÖªÀ¶Í¼Ö´ÐÐ GiftFunc
+// ï¿½ß¼ï¿½ï¿½ï¿½ï¿½ï¿½Î¯ï¿½ï¿½ - ï¿½ï¿½ï¿½ï¿½Í¨Öªï¿½ï¿½Í¼Ö´ï¿½ï¿½ GiftFunc
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOnGiftLogicTrigger, uint8, GiftEnumValue, int32, ActivateTime, float, DelayTime);
 
-// Ë³Ðò²¥·ÅÍê³ÉÎ¯ÍÐ
+// Ë³ï¿½ò²¥·ï¿½ï¿½ï¿½ï¿½Î¯ï¿½ï¿½
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnSequentialPlayCompleted, int32, QueueID);
-// Ë³Ðò²¥·Åµ¥¸öÊÓÆµÍê³ÉÎ¯ÍÐ
+// Ë³ï¿½ò²¥·Åµï¿½ï¿½ï¿½ï¿½ï¿½Æµï¿½ï¿½ï¿½Î¯ï¿½ï¿½
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOnSequentialItemCompleted, int32, QueueID, int32, ItemIndex, int32, SlotIndex);
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnHaSaGiPlayCompleted);
 
 
-// ========== [Claude] Box/Special Trigger Ë³Ðò²¥·ÅÏµÍ³ ==========
+// ========== [Claude] Box/Special Trigger Ë³ï¿½ò²¥·ï¿½ÏµÍ³ ==========
 
-// Box´¥·¢Âß¼­Íê³ÉÎ¯ÍÐ - À¶Í¼ÖÐ°ó¶¨´ËÎ¯ÍÐÀ´µ÷ÓÃ GiftFunCall
-// ²ÎÊý: GiftEnum, ActivateTime, LogicStartTimeOffset, VideoTimeInterval
+// Boxï¿½ï¿½ï¿½ï¿½ï¿½ß¼ï¿½ï¿½ï¿½ï¿½Î¯ï¿½ï¿½ - ï¿½ï¿½Í¼ï¿½Ð°ó¶¨´ï¿½Î¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ GiftFunCall
+// ï¿½ï¿½ï¿½ï¿½: GiftEnum, ActivateTime, LogicStartTimeOffset, VideoTimeInterval
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_FourParams(FOnBoxGiftLogicTrigger, uint8, GiftEnumValue, int32, ActivateTime, float, LogicStartTimeOffset, float, VideoTimeInterval);
 
-// Special´¥·¢Âß¼­Íê³ÉÎ¯ÍÐ
+// Specialï¿½ï¿½ï¿½ï¿½ï¿½ß¼ï¿½ï¿½ï¿½ï¿½Î¯ï¿½ï¿½
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_FourParams(FOnSpecialGiftLogicTrigger, uint8, GiftEnumValue, int32, ActivateTime, float, LogicStartTimeOffset, float, VideoTimeInterval);
 
-// µ¥´ÎÀñÎï¶ÓÁÐÍê³ÉÎ¯ÍÐ - [Claude] Ôö¼Ó GiftEnumValue ²ÎÊýÓÃÓÚÇø·ÖÊÇÄÄÖÖÀñÎïµÄ¶ÓÁÐÍê³É
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î¯ï¿½ï¿½ - [Claude] ï¿½ï¿½ï¿½ï¿½ GiftEnumValue ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnSingleGiftQueueCompleted, uint8, GiftEnumValue);
-// µ¥´ÎÀñÎïµ¥ÏîÍê³ÉÎ¯ÍÐ - [Claude] Ôö¼Ó GiftEnumValue ²ÎÊý
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ïµ¥ï¿½ï¿½ï¿½ï¿½ï¿½Î¯ï¿½ï¿½ - [Claude] ï¿½ï¿½ï¿½ï¿½ GiftEnumValue ï¿½ï¿½ï¿½ï¿½
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOnSingleGiftItemCompleted, uint8, GiftEnumValue, int32, ItemIndex, int32, SlotIndex);
 
 UCLASS()
@@ -78,15 +78,15 @@ struct FGiftUIDisplayConfig
 {
     GENERATED_BODY()
 
-    // Î»ÖÃÆ«ÒÆ
+    // Î»ï¿½ï¿½Æ«ï¿½ï¿½
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
     FVector2D Translation = FVector2D::ZeroVector;
 
-    // Ëõ·Å
+    // ï¿½ï¿½ï¿½ï¿½
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
     FVector2D Scale = FVector2D(1.0f, 1.0f);
 
-    // Ðý×ª½Ç¶È
+    // ï¿½ï¿½×ªï¿½Ç¶ï¿½
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
     float Rotation = 0.0f;
 };
@@ -117,7 +117,7 @@ struct FSlot
     UImage* VideoImage = nullptr;
 
 
-    // µ±Ç°Ê¹ÓÃµÄ UI ÅäÖÃ
+    // ï¿½ï¿½Ç°Ê¹ï¿½Ãµï¿½ UI ï¿½ï¿½ï¿½ï¿½
     FGiftUIDisplayConfig CurrentUIConfig;
     bool bHasCustomConfig = false;
 
@@ -125,7 +125,7 @@ struct FSlot
     int32 PoolIndex = INDEX_NONE;
 };
 
-// Åú´Î²¥·ÅÇëÇó½á¹¹
+// ï¿½ï¿½ï¿½Î²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½á¹¹
 USTRUCT(BlueprintType)
 struct FBatchPlayRequest
 {
@@ -135,16 +135,16 @@ struct FBatchPlayRequest
     UFileMediaSource* MediaSource = nullptr;
 
     UPROPERTY()
-    TArray<int32> SlotIndices;  // Ô¤·ÖÅäµÄ²ÛÎ»
+    TArray<int32> SlotIndices;  // Ô¤ï¿½ï¿½ï¿½ï¿½Ä²ï¿½Î»
 
     UPROPERTY()
-    int32 PlayCount = 1;  // ²¥·Å´ÎÊý
+    int32 PlayCount = 1;  // ï¿½ï¿½ï¿½Å´ï¿½ï¿½ï¿½
 
     UPROPERTY()
-    float Interval = 0.5f;  // ²¥·Å¼ä¸ô£¨Ãë£©
+    float Interval = 0.5f;  // ï¿½ï¿½ï¿½Å¼ï¿½ï¿½ï¿½ï¿½ï¿½ë£©
 
     UPROPERTY()
-    int32 CurrentIndex = 0;  // µ±Ç°²¥·Åµ½µÚ¼¸¸ö
+    int32 CurrentIndex = 0;  // ï¿½ï¿½Ç°ï¿½ï¿½ï¿½Åµï¿½ï¿½Ú¼ï¿½ï¿½ï¿½
 
     UPROPERTY()
     AActor* OwnerActor = nullptr;
@@ -154,51 +154,51 @@ struct FBatchPlayRequest
 
 
 
-// ÊÓÆµ²¥·ÅÅäÖÃ½á¹¹Ìå
+// ï¿½ï¿½Æµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã½á¹¹ï¿½ï¿½
 USTRUCT(BlueprintType)
 struct FVideoPlayConfig
 {
     GENERATED_BODY()
 
-    // ÊÓÆµÔ´
+    // ï¿½ï¿½ÆµÔ´
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Video")
     TArray<UFileMediaSource*> MediaSources;
 
-    // ÀñÎïÀàÐÍÃ¶¾Ù (¶ÔÓ¦À¶Í¼ÖÐµÄ Gift_Enum)
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¶ï¿½ï¿½ (ï¿½ï¿½Ó¦ï¿½ï¿½Í¼ï¿½Ðµï¿½ Gift_Enum)
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Video")
     TArray<uint8> GiftEnumValue;
 
-    // ²¥·Å´ÎÊý
+    // ï¿½ï¿½ï¿½Å´ï¿½ï¿½ï¿½
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Video")
     int32 PlayCount = 1;
 
-    // ÊÓÆµ²¥·Å¼ä¸ô£¨Ãë£©
+    // ï¿½ï¿½Æµï¿½ï¿½ï¿½Å¼ï¿½ï¿½ï¿½ï¿½ï¿½ë£©
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Video")
     float VideoInterval = 0.5f;
 
-    // Âß¼­´¥·¢Ïà¶ÔÓÚÊÓÆµ²¥·ÅµÄÊ±¼äÆ«ÒÆ£¨Ãë£©
-    // ÕýÊý£ºÂß¼­ÑÓ³Ù´¥·¢£»¸ºÊý£ºÂß¼­ÌáÇ°´¥·¢
+    // ï¿½ß¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æµï¿½ï¿½ï¿½Åµï¿½Ê±ï¿½ï¿½Æ«ï¿½Æ£ï¿½ï¿½ë£©
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß¼ï¿½ï¿½Ó³Ù´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß¼ï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Video")
     float LogicTimeOffset = 0.0f;
 
-    // Ã¿´ÎÊÓÆµ²¥·ÅÊ±Âß¼­µ÷ÓÃ´ÎÊý
+    // Ã¿ï¿½ï¿½ï¿½ï¿½Æµï¿½ï¿½ï¿½ï¿½Ê±ï¿½ß¼ï¿½ï¿½ï¿½ï¿½Ã´ï¿½ï¿½ï¿½
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Video")
     int32 LogicCallCount = 1;
 
-    // Âß¼­µ÷ÓÃµÄ¸½¼ÓÑÓ³ÙÊ±¼ä
+    // ï¿½ß¼ï¿½ï¿½ï¿½ï¿½ÃµÄ¸ï¿½ï¿½ï¿½ï¿½Ó³ï¿½Ê±ï¿½ï¿½
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Video")
     float LogicDelayTime = 0.0f;
 
-    // ÐÂÔö£ºUI ÏÔÊ¾ÅäÖÃ
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½UI ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Video")
     TArray<FGiftUIDisplayConfig> UIDisplayConfig;
 
-    // ÊÇ·ñÊ¹ÓÃ×Ô¶¨Òå UI ÅäÖÃ£¨false ÔòÊ¹ÓÃÄ¬ÈÏ£©
+    // ï¿½Ç·ï¿½Ê¹ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½ UI ï¿½ï¿½ï¿½Ã£ï¿½false ï¿½ï¿½Ê¹ï¿½ï¿½Ä¬ï¿½Ï£ï¿½
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Video")
     bool bUseCustomUIConfig = false;
 };
 
-// µ¥´ÎÂß¼­µ÷ÓÃÇëÇó
+// ï¿½ï¿½ï¿½ï¿½ï¿½ß¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 USTRUCT()
 struct FLogicCallRequest
 {
@@ -216,7 +216,7 @@ struct FLogicCallRequest
     FTimerHandle TimerHandle;
 };
 
-// Ë³Ðò²¥·ÅÇëÇóÏî
+// Ë³ï¿½ò²¥·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 USTRUCT(BlueprintType)
 struct FSequentialPlayItem
 {
@@ -250,7 +250,7 @@ struct FSequentialPlayItem
     bool bWaitForVideoEnd = false;
 };
 
-// Ë³Ðò²¥·Å¶ÓÁÐ
+// Ë³ï¿½ò²¥·Å¶ï¿½ï¿½ï¿½
 USTRUCT()
 struct FSequentialPlayQueue
 {
@@ -326,11 +326,11 @@ public:
     virtual void Initialize(FSubsystemCollectionBase& Collection) override;
     virtual void Deinitialize() override;
 
-    /** ²¥·Åµ¥¸öÊÓÆµ */
+    /** ï¿½ï¿½ï¿½Åµï¿½ï¿½ï¿½ï¿½ï¿½Æµ */
     UFUNCTION(BlueprintCallable, Category = "GiftVideo")
     int32 PlayGiftVideo(UFileMediaSource* MediaSource, AActor* Actor);
 
-    /** Åú´Î²¥·ÅÊÓÆµ */
+    /** ï¿½ï¿½ï¿½Î²ï¿½ï¿½ï¿½ï¿½ï¿½Æµ */
     UFUNCTION(BlueprintCallable, Category = "GiftVideo")
     void PlayGiftVideoBatch(UFileMediaSource* MediaSource, AActor* Actor, int32 PlayCount, float Interval);
 
@@ -381,66 +381,66 @@ public:
     );
 
 
-    // Ë³Ðò²¥·ÅÍê³ÉÎ¯ÍÐ
+    // Ë³ï¿½ò²¥·ï¿½ï¿½ï¿½ï¿½Î¯ï¿½ï¿½
     UPROPERTY(BlueprintAssignable, Category = "Video Delegate")
     FOnSequentialPlayCompleted OnSequentialPlayCompleted;
 
-    // Ë³Ðò²¥·Åµ¥¸öÊÓÆµÍê³ÉÎ¯ÍÐ
+    // Ë³ï¿½ò²¥·Åµï¿½ï¿½ï¿½ï¿½ï¿½Æµï¿½ï¿½ï¿½Î¯ï¿½ï¿½
     UPROPERTY(BlueprintAssignable, Category = "Video Delegate")
     FOnSequentialItemCompleted OnSequentialItemCompleted;
 
     /**
-     * ¿ªÊ¼Ë³Ðò²¥·ÅÊÓÆµ¶ÓÁÐ
-     * @param Items ÒªË³Ðò²¥·ÅµÄÊÓÆµÁÐ±í
-     * @param SoundValue ÒôÁ¿
+     * ï¿½ï¿½Ê¼Ë³ï¿½ò²¥·ï¿½ï¿½ï¿½Æµï¿½ï¿½ï¿½ï¿½
+     * @param Items ÒªË³ï¿½ò²¥·Åµï¿½ï¿½ï¿½Æµï¿½Ð±ï¿½
+     * @param SoundValue ï¿½ï¿½ï¿½ï¿½
      * @param Actor Owner Actor
-     * @return ¶ÓÁÐID£¬ÓÃÓÚ×·×Ù´Ë¶ÓÁÐ
+     * @return ï¿½ï¿½ï¿½ï¿½IDï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×·ï¿½Ù´Ë¶ï¿½ï¿½ï¿½
      */
     UFUNCTION(BlueprintCallable, Category = "GiftVideo|Sequential")
     int32 StartSequentialPlay(const TArray<FSequentialPlayItem>& Items, float SoundValue, AActor* Actor);
 
     /**
-     * Í£Ö¹Ö¸¶¨µÄË³Ðò²¥·Å¶ÓÁÐ
+     * Í£Ö¹Ö¸ï¿½ï¿½ï¿½ï¿½Ë³ï¿½ò²¥·Å¶ï¿½ï¿½ï¿½
      */
     UFUNCTION(BlueprintCallable, Category = "GiftVideo|Sequential")
     void StopSequentialPlay(int32 QueueID);
 
     /**
-     * Í£Ö¹ËùÓÐË³Ðò²¥·Å¶ÓÁÐ
+     * Í£Ö¹ï¿½ï¿½ï¿½ï¿½Ë³ï¿½ò²¥·Å¶ï¿½ï¿½ï¿½
      */
     UFUNCTION(BlueprintCallable, Category = "GiftVideo|Sequential")
     void StopAllSequentialPlays();
 
     /**
-     * »ñÈ¡Ë³Ðò²¥·Å¶ÓÁÐµÄµ±Ç°½ø¶È
-     * @return µ±Ç°²¥·Åµ½µÚ¼¸¸ö£¨´Ó0¿ªÊ¼£©£¬-1±íÊ¾¶ÓÁÐ²»´æÔÚ
+     * ï¿½ï¿½È¡Ë³ï¿½ò²¥·Å¶ï¿½ï¿½ÐµÄµï¿½Ç°ï¿½ï¿½ï¿½ï¿½
+     * @return ï¿½ï¿½Ç°ï¿½ï¿½ï¿½Åµï¿½ï¿½Ú¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½0ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½-1ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½Ð²ï¿½ï¿½ï¿½ï¿½ï¿½
      */
     UFUNCTION(BlueprintCallable, Category = "GiftVideo|Sequential")
     int32 GetSequentialPlayProgress(int32 QueueID);
 
 
-    // Âß¼­´¥·¢Î¯ÍÐ - °ó¶¨µ½À¶Í¼ÖÐµ÷ÓÃ GiftFunc
+    // ï¿½ß¼ï¿½ï¿½ï¿½ï¿½ï¿½Î¯ï¿½ï¿½ - ï¿½ó¶¨µï¿½ï¿½ï¿½Í¼ï¿½Ðµï¿½ï¿½ï¿½ GiftFunc
     UPROPERTY(BlueprintAssignable, Category = "Video Delegate")
     FOnGiftLogicTrigger OnGiftLogicTrigger;
 
     private:
-        // Ë³Ðò²¥·Å¶ÓÁÐÁÐ±í
+        // Ë³ï¿½ò²¥·Å¶ï¿½ï¿½ï¿½ï¿½Ð±ï¿½
         UPROPERTY()
         TArray<FSequentialPlayQueue> SequentialQueues;
 
-        // ¶ÓÁÐID¼ÆÊýÆ÷
+        // ï¿½ï¿½ï¿½ï¿½IDï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         int32 NextQueueID = 0;
 
-        // Slotµ½¶ÓÁÐµÄÓ³Éä£¨ÓÃÓÚÊ¶±ð½áÊøµÄÊÓÆµÊôÓÚÄÄ¸ö¶ÓÁÐ£©
+        // Slotï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½Ó³ï¿½ä£¨ï¿½ï¿½ï¿½ï¿½Ê¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æµï¿½ï¿½ï¿½ï¿½ï¿½Ä¸ï¿½ï¿½ï¿½ï¿½Ð£ï¿½
         TMap<int32, int32> SlotToQueueMap;
 
-        // ²¥·Å¶ÓÁÐÖÐµÄÏÂÒ»¸öÊÓÆµ
+        // ï¿½ï¿½ï¿½Å¶ï¿½ï¿½ï¿½ï¿½Ðµï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½Æµ
         void PlayNextInQueue(int32 QueueID);
 
-        // ´¦ÀíË³Ðò²¥·ÅµÄÊÓÆµ½áÊø
+        // ï¿½ï¿½ï¿½ï¿½Ë³ï¿½ò²¥·Åµï¿½ï¿½ï¿½Æµï¿½ï¿½ï¿½ï¿½
         void HandleSequentialMediaEnd(int32 SlotIndex);
 
-        // ²éÕÒ¶ÓÁÐ
+        // ï¿½ï¿½ï¿½Ò¶ï¿½ï¿½ï¿½
         FSequentialPlayQueue* FindQueue(int32 QueueID);
 
         void OnHaSaGiPlayEnd();
@@ -457,10 +457,10 @@ private:
     void InitPool();
     FSlot* FindFreeSlot();
 
-    // ´´½¨ÐÂµÄ Slot
+    // ï¿½ï¿½ï¿½ï¿½ï¿½Âµï¿½ Slot
     FSlot* CreateNewSlot(AActor* Actor);
 
-    // Åú´Î²¥·ÅÏà¹Ø
+    // ï¿½ï¿½ï¿½Î²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     UPROPERTY()
     TArray<FBatchPlayRequest> BatchRequests;
 
@@ -468,20 +468,20 @@ private:
     void StartSlotPlayback(int32 SlotIndex);
 
 private:
-    // Ó¦ÓÃ UI ÅäÖÃ
+    // Ó¦ï¿½ï¿½ UI ï¿½ï¿½ï¿½ï¿½
     void ApplyUIConfig(int32 SlotIndex, const FGiftUIDisplayConfig& Config);
-    // ÖØÖÃ UI µ½Ä¬ÈÏ×´Ì¬
+    // ï¿½ï¿½ï¿½ï¿½ UI ï¿½ï¿½Ä¬ï¿½ï¿½×´Ì¬
     void ResetUIToDefault(int32 SlotIndex);
 
-    // Ä¬ÈÏ UI ÅäÖÃ
+    // Ä¬ï¿½ï¿½ UI ï¿½ï¿½ï¿½ï¿½
     FGiftUIDisplayConfig DefaultUIConfig;
 
 
-    // Âß¼­µ÷ÓÃ¶ÓÁÐ
+    // ï¿½ß¼ï¿½ï¿½ï¿½ï¿½Ã¶ï¿½ï¿½ï¿½
     UPROPERTY()
     TArray<FLogicCallRequest> PendingLogicCalls;
 
-    // ´¦ÀíÂß¼­´¥·¢
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ß¼ï¿½ï¿½ï¿½ï¿½ï¿½
     void ScheduleLogicCall(uint8 GiftEnumValue, int32 ActivateTime, float DelayTime, float TimeOffset);
     void ExecuteLogicCall(int32 RequestIndex);
     void CleanupLogicTimers();
@@ -505,27 +505,27 @@ public:
 
 
 public:
-    // ========== [Claude] Box/Special Trigger Ë³Ðò²¥·Å½Ó¿Ú ==========
+    // ========== [Claude] Box/Special Trigger Ë³ï¿½ò²¥·Å½Ó¿ï¿½ ==========
 
-    // Box´¥·¢Âß¼­Î¯ÍÐ - À¶Í¼°ó¶¨´ËÎ¯ÍÐÖ´ÐÐ GiftFunCall
+    // Boxï¿½ï¿½ï¿½ï¿½ï¿½ß¼ï¿½Î¯ï¿½ï¿½ - ï¿½ï¿½Í¼ï¿½ó¶¨´ï¿½Î¯ï¿½ï¿½Ö´ï¿½ï¿½ GiftFunCall
     UPROPERTY(BlueprintAssignable, Category = "Video Delegate|BoxTrigger")
     FOnBoxGiftLogicTrigger OnBoxGiftLogicTrigger;
 
-    // Special´¥·¢Âß¼­Î¯ÍÐ - À¶Í¼°ó¶¨´ËÎ¯ÍÐÖ´ÐÐ GiftFunCall
+    // Specialï¿½ï¿½ï¿½ï¿½ï¿½ß¼ï¿½Î¯ï¿½ï¿½ - ï¿½ï¿½Í¼ï¿½ó¶¨´ï¿½Î¯ï¿½ï¿½Ö´ï¿½ï¿½ GiftFunCall
     UPROPERTY(BlueprintAssignable, Category = "Video Delegate|SpecialTrigger")
     FOnSpecialGiftLogicTrigger OnSpecialGiftLogicTrigger;
 
     /**
-     * [Claude] BoxTrigger µÄ C++ ÊµÏÖ
-     * Ê¹ÓÃË³Ðò²¥·ÅÏµÍ³£¬±ÜÃâ¸ß²¢·¢Ê± Timer ³åÍ»
-     * @param GiftEnums ÀñÎïÃ¶¾ÙÊý×é
-     * @param LogicStartOffsets Ã¿¸öÀñÎï¶ÔÓ¦µÄÂß¼­Æô¶¯Æ«ÒÆÊ±¼äÊý×é
-     * @param Interval ÊÓÆµ²¥·Å¼ä¸ô
-     * @param RandomTimes Ëæ»ú´ÎÊý£¨Ñ­»·´ÎÊý£©
-     * @param AnimName ¶¯»­/ÊÓÆµÃû³Æ
-     * @param SoundValue ÒôÁ¿
+     * [Claude] BoxTrigger ï¿½ï¿½ C++ Êµï¿½ï¿½
+     * Ê¹ï¿½ï¿½Ë³ï¿½ò²¥·ï¿½ÏµÍ³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß²ï¿½ï¿½ï¿½Ê± Timer ï¿½ï¿½Í»
+     * @param GiftEnums ï¿½ï¿½ï¿½ï¿½Ã¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+     * @param LogicStartOffsets Ã¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ß¼ï¿½ï¿½ï¿½ï¿½ï¿½Æ«ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+     * @param Interval ï¿½ï¿½Æµï¿½ï¿½ï¿½Å¼ï¿½ï¿½
+     * @param RandomTimes ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+     * @param AnimName ï¿½ï¿½ï¿½ï¿½/ï¿½ï¿½Æµï¿½ï¿½ï¿½ï¿½
+     * @param SoundValue ï¿½ï¿½ï¿½ï¿½
      * @param Actor Owner Actor
-     * @return ¶ÓÁÐID
+     * @return ï¿½ï¿½ï¿½ï¿½ID
      */
     UFUNCTION(BlueprintCallable, Category = "GiftVideo|Trigger")
     int32 PlayBoxTriggerSequence(
@@ -539,16 +539,16 @@ public:
     );
 
     /**
-     * [Claude] SpecialTrigger µÄ C++ ÊµÏÖ
-     * Ê¹ÓÃË³Ðò²¥·ÅÏµÍ³£¬±ÜÃâ¸ß²¢·¢Ê± Timer ³åÍ»
-     * @param GiftEnums ÀñÎïÃ¶¾ÙÊý×é
-     * @param LogicStartOffsets Ã¿¸öÀñÎï¶ÔÓ¦µÄÂß¼­Æô¶¯Æ«ÒÆÊ±¼äÊý×é
-     * @param Interval ÊÓÆµ²¥·Å¼ä¸ô
-     * @param TriggerTime ´¥·¢´ÎÊý
-     * @param AnimName ¶¯»­/ÊÓÆµÃû³Æ
-     * @param SoundValue ÒôÁ¿
+     * [Claude] SpecialTrigger ï¿½ï¿½ C++ Êµï¿½ï¿½
+     * Ê¹ï¿½ï¿½Ë³ï¿½ò²¥·ï¿½ÏµÍ³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß²ï¿½ï¿½ï¿½Ê± Timer ï¿½ï¿½Í»
+     * @param GiftEnums ï¿½ï¿½ï¿½ï¿½Ã¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+     * @param LogicStartOffsets Ã¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ß¼ï¿½ï¿½ï¿½ï¿½ï¿½Æ«ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+     * @param Interval ï¿½ï¿½Æµï¿½ï¿½ï¿½Å¼ï¿½ï¿½
+     * @param TriggerTime ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+     * @param AnimName ï¿½ï¿½ï¿½ï¿½/ï¿½ï¿½Æµï¿½ï¿½ï¿½ï¿½
+     * @param SoundValue ï¿½ï¿½ï¿½ï¿½
      * @param Actor Owner Actor
-     * @return ¶ÓÁÐID
+     * @return ï¿½ï¿½ï¿½ï¿½ID
      */
     UFUNCTION(BlueprintCallable, Category = "GiftVideo|Trigger")
     int32 PlaySpecialTriggerSequence(
@@ -562,16 +562,16 @@ public:
     );
 
 private:
-    // ========== [Claude] Box/Special Trigger ÄÚ²¿´¦Àí ==========
+    // ========== [Claude] Box/Special Trigger ï¿½Ú²ï¿½ï¿½ï¿½ï¿½ï¿½ ==========
 
-    // ´¥·¢ÀàÐÍÃ¶¾Ù£¬ÓÃÓÚÇø·Ö Box ºÍ Special
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¶ï¿½Ù£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Box ï¿½ï¿½ Special
     enum class ETriggerType : uint8
     {
         Box,
         Special
     };
 
-    // ´¥·¢¶ÓÁÐÉÏÏÂÎÄ£¬´æ´¢Ã¿¸ö¶ÓÁÐµÄ¸½¼ÓÐÅÏ¢
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä£ï¿½ï¿½æ´¢Ã¿ï¿½ï¿½ï¿½ï¿½ï¿½ÐµÄ¸ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
     struct FTriggerQueueContext
     {
         ETriggerType TriggerType = ETriggerType::Box;
@@ -581,14 +581,14 @@ private:
         FString GiftName;
     };
 
-    // ¶ÓÁÐIDµ½ÉÏÏÂÎÄµÄÓ³Éä
+    // ï¿½ï¿½ï¿½ï¿½IDï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Äµï¿½Ó³ï¿½ï¿½
     TMap<int32, FTriggerQueueContext> TriggerQueueContextMap;
 
-    // ÄÚ²¿´¦Àíº¯Êý£ºµ±Ë³Ðò²¥·ÅÏîÍê³ÉÊ±µ÷ÓÃ
+    // ï¿½Ú²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë³ï¿½ò²¥·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½
     UFUNCTION()
     void HandleTriggerItemCompleted(int32 QueueID, int32 ItemIndex, int32 SlotIndex);
 
-    // ²éÕÒÊÓÆµ MediaSource£¨Í¨¹ýÃû³Æ´Ó DataTable ²éÕÒ£©
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æµ MediaSourceï¿½ï¿½Í¨ï¿½ï¿½ï¿½ï¿½ï¿½Æ´ï¿½ DataTable ï¿½ï¿½ï¿½Ò£ï¿½
     UFileMediaSource* FindMediaSourceByName(const FString& VideoName);
 
 
@@ -596,23 +596,23 @@ private:
 
 
     public:
-        // ========== [Claude] µ¥´ÎÀñÎï¶ÓÁÐÏµÍ³£¨°´ÀñÎïÀàÐÍ·Ö¶ÓÁÐ£© ==========
+        // ========== [Claude] ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÏµÍ³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í·Ö¶ï¿½ï¿½Ð£ï¿½ ==========
 
-        // µ¥´ÎÀñÎï¶ÓÁÐÍê³ÉÎ¯ÍÐ
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î¯ï¿½ï¿½
         UPROPERTY(BlueprintAssignable, Category = "Video Delegate|SingleGift")
         FOnSingleGiftQueueCompleted OnSingleGiftQueueCompleted;
 
-        // µ¥´ÎÀñÎïµ¥ÏîÍê³ÉÎ¯ÍÐ
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ïµ¥ï¿½ï¿½ï¿½ï¿½ï¿½Î¯ï¿½ï¿½
         UPROPERTY(BlueprintAssignable, Category = "Video Delegate|SingleGift")
         FOnSingleGiftItemCompleted OnSingleGiftItemCompleted;
 
         /**
-         * [Claude] ½«µ¥´ÎÀñÎï¼ÓÈë¶ÔÓ¦ÀàÐÍµÄ¶ÓÁÐ
-         * Í¬ÖÖÀñÎï¿ìËÙ¶à´Îµ÷ÓÃÊ±»áÅÅ¶Ó£¬²»Í¬ÖÖÀñÎï¿ÉÍ¬Ê±²¥·Å
-         * @param Request ÀñÎïÇëÇóÅäÖÃ£¨°üº¬ GiftEnumValue ÓÃÓÚÇø·Ö¶ÓÁÐ£©
-         * @param PlayCount ²¥·Å´ÎÊý
-         * @param Interval ²¥·Å¼ä¸ô£¨Ãë£©
-         * @param SoundValue ÒôÁ¿
+         * [Claude] ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ÍµÄ¶ï¿½ï¿½ï¿½
+         * Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ù¶ï¿½Îµï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½Å¶Ó£ï¿½ï¿½ï¿½Í¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¬Ê±ï¿½ï¿½ï¿½ï¿½
+         * @param Request ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã£ï¿½ï¿½ï¿½ï¿½ï¿½ GiftEnumValue ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¶ï¿½ï¿½Ð£ï¿½
+         * @param PlayCount ï¿½ï¿½ï¿½Å´ï¿½ï¿½ï¿½
+         * @param Interval ï¿½ï¿½ï¿½Å¼ï¿½ï¿½ï¿½ï¿½ï¿½ë£©
+         * @param SoundValue ï¿½ï¿½ï¿½ï¿½
          * @param Actor Owner Actor
          */
         UFUNCTION(BlueprintCallable, Category = "GiftVideo|SingleGift")
@@ -625,42 +625,42 @@ private:
         );
 
         /**
-         * [Claude] Çå¿ÕÖ¸¶¨ÀñÎïÀàÐÍµÄ¶ÓÁÐ
-         * @param GiftEnumValue ÀñÎïÀàÐÍÃ¶¾ÙÖµ
+         * [Claude] ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÍµÄ¶ï¿½ï¿½ï¿½
+         * @param GiftEnumValue ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¶ï¿½ï¿½Öµ
          */
         UFUNCTION(BlueprintCallable, Category = "GiftVideo|SingleGift")
         void ClearSingleGiftQueue(uint8 GiftEnumValue);
 
         /**
-         * [Claude] Çå¿ÕËùÓÐÀñÎïÀàÐÍµÄ¶ÓÁÐ
+         * [Claude] ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÍµÄ¶ï¿½ï¿½ï¿½
          */
         UFUNCTION(BlueprintCallable, Category = "GiftVideo|SingleGift")
         void ClearAllSingleGiftQueues();
 
         /**
-         * [Claude] »ñÈ¡Ö¸¶¨ÀñÎïÀàÐÍµÄ¶ÓÁÐÊ£Óà³¤¶È
-         * @param GiftEnumValue ÀñÎïÀàÐÍÃ¶¾ÙÖµ
-         * @return ¶ÓÁÐÖÐÊ£Óà´ý²¥·ÅµÄÊýÁ¿
+         * [Claude] ï¿½ï¿½È¡Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÍµÄ¶ï¿½ï¿½ï¿½Ê£ï¿½à³¤ï¿½ï¿½
+         * @param GiftEnumValue ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¶ï¿½ï¿½Öµ
+         * @return ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Åµï¿½ï¿½ï¿½ï¿½ï¿½
          */
         UFUNCTION(BlueprintCallable, Category = "GiftVideo|SingleGift")
         int32 GetSingleGiftQueueLength(uint8 GiftEnumValue) const;
 
         /**
-         * [Claude] »ñÈ¡µ±Ç°»îÔ¾µÄÀñÎï¶ÓÁÐÊýÁ¿
+         * [Claude] ï¿½ï¿½È¡ï¿½ï¿½Ç°ï¿½ï¿½Ô¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
          */
         UFUNCTION(BlueprintCallable, Category = "GiftVideo|SingleGift")
         int32 GetActiveSingleGiftQueueCount() const;
 
 private:
-    // ========== [Claude] µ¥´ÎÀñÎï¶ÓÁÐÄÚ²¿£¨°´ GiftEnumValue ·Ö¶ÓÁÐ£© ==========
+    // ========== [Claude] ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú²ï¿½ï¿½ï¿½ï¿½ï¿½ GiftEnumValue ï¿½Ö¶ï¿½ï¿½Ð£ï¿½ ==========
 
-    // [Claude] ÀñÎïÀàÐÍ -> ¶ÓÁÐID µÄÓ³Éä£¨Ã¿ÖÖÀñÎïÓÐ¶ÀÁ¢¶ÓÁÐ£©
+    // [Claude] ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ -> ï¿½ï¿½ï¿½ï¿½ID ï¿½ï¿½Ó³ï¿½ä£¨Ã¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð£ï¿½
     TMap<uint8, int32> GiftTypeToQueueMap;
 
-    // [Claude] ¶ÓÁÐID -> ÀñÎïÀàÐÍ µÄ·´ÏòÓ³Éä£¨ÓÃÓÚ»Øµ÷Ê±²éÕÒÀñÎïÀàÐÍ£©
+    // [Claude] ï¿½ï¿½ï¿½ï¿½ID -> ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ä·ï¿½ï¿½ï¿½Ó³ï¿½ä£¨ï¿½ï¿½ï¿½Ú»Øµï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í£ï¿½
     TMap<int32, uint8> QueueToGiftTypeMap;
 
-    // [Claude] ¶ÓÁÐID -> ÅäÖÃÐÅÏ¢µÄÓ³Éä
+    // [Claude] ï¿½ï¿½ï¿½ï¿½ID -> ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½Ó³ï¿½ï¿½
     struct FSingleGiftQueueConfig
     {
         float Interval = 0.5f;
@@ -669,22 +669,23 @@ private:
     };
     TMap<int32, FSingleGiftQueueConfig> SingleGiftQueueConfigs;
 
-    // ´¦Àíµ¥´ÎÀñÎï¶ÓÁÐÍê³É
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     UFUNCTION()
     void HandleSingleGiftQueueCompleted(int32 QueueID);
 
-    // ´¦Àíµ¥´ÎÀñÎïµ¥ÏîÍê³É
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ïµ¥ï¿½ï¿½ï¿½ï¿½ï¿½
     UFUNCTION()
     void HandleSingleGiftItemCompleted(int32 QueueID, int32 ItemIndex, int32 SlotIndex);
 
 
     public:
         /**
-         * [Claude] BoxTrigger ÅÅ¶Ó°æ±¾
-         * Í¬ÖÖ AnimName »á×Ô¶¯×·¼Óµ½¶ÓÁÐ£¬Ö§³Ö±¶ÂÊ
+         * [Claude] BoxTrigger ï¿½Å¶Ó°æ±¾
+         * Í¬ï¿½ï¿½ AnimName ï¿½ï¿½ï¿½Ô¶ï¿½×·ï¿½Óµï¿½ï¿½ï¿½ï¿½Ð£ï¿½Ö§ï¿½Ö±ï¿½ï¿½ï¿½
          */
         UFUNCTION(BlueprintCallable, Category = "GiftVideo|Trigger")
         void EnqueueBoxTrigger(
+            const TArray<FString>& CallNames,
             const TArray<uint8>& GiftEnums,
             const TArray<float>& LogicStartOffsets,
             float Interval,
@@ -696,11 +697,12 @@ private:
         );
 
         /**
-         * [Claude] SpecialTrigger ÅÅ¶Ó°æ±¾
-         * Í¬ÖÖ AnimName »á×Ô¶¯×·¼Óµ½¶ÓÁÐ£¬Ö§³Ö±¶ÂÊ
+         * [Claude] SpecialTrigger ï¿½Å¶Ó°æ±¾
+         * Í¬ï¿½ï¿½ AnimName ï¿½ï¿½ï¿½Ô¶ï¿½×·ï¿½Óµï¿½ï¿½ï¿½ï¿½Ð£ï¿½Ö§ï¿½Ö±ï¿½ï¿½ï¿½
          */
         UFUNCTION(BlueprintCallable, Category = "GiftVideo|Trigger")
         void EnqueueSpecialTrigger(
+            const TArray<FString>& CallNames,
             const TArray<uint8>& GiftEnums,
             const TArray<float>& LogicStartOffsets,
             float Interval,
@@ -712,44 +714,47 @@ private:
         );
 
         /**
-         * [Claude] Çå¿ÕÖ¸¶¨ Box ´¥·¢¶ÓÁÐ
+         * [Claude] ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ Box ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
          */
         UFUNCTION(BlueprintCallable, Category = "GiftVideo|Trigger")
         void ClearBoxTriggerQueue(const FString& AnimName);
 
         /**
-         * [Claude] Çå¿ÕÖ¸¶¨ Special ´¥·¢¶ÓÁÐ
+         * [Claude] ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ Special ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
          */
         UFUNCTION(BlueprintCallable, Category = "GiftVideo|Trigger")
         void ClearSpecialTriggerQueue(const FString& AnimName);
 
         /**
-         * [Claude] Çå¿ÕËùÓÐ Trigger ¶ÓÁÐ
+         * [Claude] ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Trigger ï¿½ï¿½ï¿½ï¿½
          */
         UFUNCTION(BlueprintCallable, Category = "GiftVideo|Trigger")
         void ClearAllTriggerQueues();
 
 
     private:
-        // ========== [Claude] Box/Special Trigger ÅÅ¶ÓÏµÍ³Êý¾Ý½á¹¹ ==========
+        // ========== [Claude] Box/Special Trigger ï¿½Å¶ï¿½ÏµÍ³ï¿½ï¿½ï¿½Ý½á¹¹ ==========
 
-        // [Claude] Box´¥·¢µÄ¶ÀÁ¢Ó³Éä£¨AnimName -> QueueID£©
+        // [Claude] Boxï¿½ï¿½ï¿½ï¿½ï¿½Ä¶ï¿½ï¿½ï¿½Ó³ï¿½ä£¨AnimName -> QueueIDï¿½ï¿½
         TMap<FString, int32> BoxTriggerToQueueMap;
-        TMap<int32, FString> QueueToBoxTriggerMap;  // ·´ÏòÓ³Éä
+        TMap<int32, FString> QueueToBoxTriggerMap;  // ï¿½ï¿½ï¿½ï¿½Ó³ï¿½ï¿½
 
-        // [Claude] Special´¥·¢µÄ¶ÀÁ¢Ó³Éä
+        // [Claude] Specialï¿½ï¿½ï¿½ï¿½ï¿½Ä¶ï¿½ï¿½ï¿½Ó³ï¿½ï¿½
         TMap<FString, int32> SpecialTriggerToQueueMap;
-        TMap<int32, FString> QueueToSpecialTriggerMap;  // ·´ÏòÓ³Éä
+        TMap<int32, FString> QueueToSpecialTriggerMap;  // ï¿½ï¿½ï¿½ï¿½Ó³ï¿½ï¿½
 
-        // [Claude] ¸¨Öúº¯Êý£º¹¹½¨´¥·¢ÏîÁÐ±í
+        // [Claude] ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð±ï¿½
         TArray<FSequentialPlayItem> BuildTriggerItems(
+            const TArray<FString>& CallNames,
             const TArray<uint8>& GiftEnums,
             const TArray<float>& LogicStartOffsets,
             float Interval,
             int32 LoopCount,
-            const FString& AnimName);
+            const FString& AnimName,
+            bool isSpecial
+            );
 
-        // [Claude] ´¦ÀíÅÅ¶Ó°æ±¾µÄÍê³É»Øµ÷
+        // [Claude] ï¿½ï¿½ï¿½ï¿½ï¿½Å¶Ó°æ±¾ï¿½ï¿½ï¿½ï¿½É»Øµï¿½
         UFUNCTION()
         void HandleBoxTriggerQueueCompleted(int32 QueueID);
 
@@ -812,7 +817,7 @@ public:
     UFUNCTION()
     void OnProxyMediaEnd();
 
-    // [Claude] ÖØÖÃ·ÀÖØÈë×´Ì¬£¬ÔÚ¿ªÊ¼ÐÂ²¥·ÅÊ±µ÷ÓÃ
+    // [Claude] ï¿½ï¿½ï¿½Ã·ï¿½ï¿½ï¿½ï¿½ï¿½×´Ì¬ï¿½ï¿½ï¿½Ú¿ï¿½Ê¼ï¿½Â²ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½
     void ResetEndState();
 
 private:
@@ -821,7 +826,7 @@ private:
 
     int32 PlayerID = INDEX_NONE;
 
-    // [Claude] ·ÀÖ¹ OnEndReached ÖØ¸´´¥·¢
+    // [Claude] ï¿½ï¿½Ö¹ OnEndReached ï¿½Ø¸ï¿½ï¿½ï¿½ï¿½ï¿½
     double LastEndTime = 0.0;
-    static constexpr double END_DEBOUNCE_THRESHOLD = 0.1;  // 100ms ÄÚµÄÖØ¸´µ÷ÓÃÊÓÎªÍ¬Ò»´Î
+    static constexpr double END_DEBOUNCE_THRESHOLD = 0.1;  // 100ms ï¿½Úµï¿½ï¿½Ø¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÎªÍ¬Ò»ï¿½ï¿½
 };
