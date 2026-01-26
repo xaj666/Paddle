@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "CoreMinimal.h"
 #include "Subsystems/GameInstanceSubsystem.h"
@@ -688,6 +688,9 @@ private:
             const TArray<FString>& CallNames,
             const TArray<uint8>& GiftEnums,
             const TArray<float>& LogicStartOffsets,
+            const TArray<UFileMediaSource*>& FMSs,
+            const TArray<FGiftUIDisplayConfig>& UIs,
+            const TArray<bool>& UseOrNot,
             float Interval,
             int32 RandomTimes,
             const FString& AnimName,
@@ -705,6 +708,9 @@ private:
             const TArray<FString>& CallNames,
             const TArray<uint8>& GiftEnums,
             const TArray<float>& LogicStartOffsets,
+            const TArray<UFileMediaSource*>& FMSs,
+            const TArray<FGiftUIDisplayConfig>& UIs,
+            const TArray<bool>& UseOrNot,
             float Interval,
             int32 TriggerTime,
             const FString& AnimName,
@@ -748,6 +754,9 @@ private:
             const TArray<FString>& CallNames,
             const TArray<uint8>& GiftEnums,
             const TArray<float>& LogicStartOffsets,
+            const TArray<UFileMediaSource*>& FMSs,
+            const TArray<FGiftUIDisplayConfig>& UIs,
+            const TArray<bool>& UseOrNot,
             float Interval,
             int32 LoopCount,
             const FString& AnimName,

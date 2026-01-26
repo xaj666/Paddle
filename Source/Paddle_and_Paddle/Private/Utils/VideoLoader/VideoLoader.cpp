@@ -1606,7 +1606,7 @@ void UGiftVideoPool::PlayNextInQueue(int32 QueueID)
     // 触发逻辑调用
     for (int32 j = 0; j < Item.LogicCallCount; ++j)
     {
-        ScheduleLogicCall(Item.GiftEnumValue, j + 1, 0.0f, 0);
+        ScheduleLogicCall(Item.GiftEnumValue, j + 1, 0.0f, Item.LogicDelayTime);
     }
 
     // 打开并播放
@@ -2299,6 +2299,9 @@ TArray<FSequentialPlayItem> UGiftVideoPool::BuildTriggerItems(
     const TArray<FString>& CallNames,
     const TArray<uint8>& GiftEnums,
     const TArray<float>& LogicStartOffsets,
+    const TArray<UFileMediaSource*>& FMSs,
+    const TArray<FGiftUIDisplayConfig>& UIs,
+    const TArray<bool>& UseOrNot,
     float Interval,
     int32 LoopCount,
     const FString& AnimName,
@@ -2347,16 +2350,21 @@ TArray<FSequentialPlayItem> UGiftVideoPool::BuildTriggerItems(
             for (int32 j = 0; j < GiftEnums.Num(); ++j)
             {
                 // [Claude] 查找视频源
-                UFileMediaSource* MediaSource = FindMediaSourceByName(CallNames[j]);
+                //UFileMediaSource* MediaSource = FindMediaSourceByName(CallNames[j]);
+                //此处直接改由蓝图提供FMS，这样就能在蓝图中把抓鸭子这种一对多视频的礼物FMS传进来
+
+                UFileMediaSource* MediaSource = (FMSs.IsValidIndex(j)) ? FMSs[j] : nullptr;
+                FGiftUIDisplayConfig UI = UIs[j];
 
                 FSequentialPlayItem Item;
                 Item.MediaSource = MediaSource;
                 Item.GiftEnumValue = GiftEnums[j];
+                Item.UIConfig = UI;
                 Item.LogicCallCount = 1;
                 Item.LogicDelayTime = (LogicStartOffsets.IsValidIndex(j)) ? LogicStartOffsets[j] : 0.0f;
 
                 Item.NoVideoDuration = (j == GiftEnums.Num() - 1) ? Interval : 0.0f;
-                Item.bUseCustomUIConfig = false;
+                Item.bUseCustomUIConfig = UseOrNot[j];
                 Item.IntervalFromBar = (j == GiftEnums.Num() - 1) ? Interval : 0.0f;
                 Item.bWaitForVideoEnd = false;
 
@@ -2396,15 +2404,19 @@ TArray<FSequentialPlayItem> UGiftVideoPool::BuildTriggerItems(
             
             int32 RandomIndex = FMath::RandRange(0, CallNames.Num() - 1);
             // [Claude] 查找视频源
-            UFileMediaSource* MediaSource = FindMediaSourceByName(CallNames[RandomIndex]);
+            //UFileMediaSource* MediaSource = FindMediaSourceByName(CallNames[RandomIndex]);
+            //同上
+            UFileMediaSource* MediaSource = (FMSs.IsValidIndex(i)) ? FMSs[i] : nullptr;
+            FGiftUIDisplayConfig UI = UIs[i];
 
             FSequentialPlayItem Item;
             Item.MediaSource = MediaSource;
             Item.GiftEnumValue = GiftEnums[RandomIndex];
+            Item.UIConfig = UI;
             Item.LogicCallCount = 1;
             Item.LogicDelayTime = (LogicStartOffsets.IsValidIndex(RandomIndex)) ? LogicStartOffsets[RandomIndex] : 0.0f;
             Item.NoVideoDuration = Interval;
-            Item.bUseCustomUIConfig = false;
+            Item.bUseCustomUIConfig = UseOrNot[i];
             Item.IntervalFromBar = Interval;
             Item.bWaitForVideoEnd = false;
 
@@ -2425,6 +2437,9 @@ void UGiftVideoPool::EnqueueBoxTrigger(
     const TArray<FString>& CallNames,
     const TArray<uint8>& GiftEnums,
     const TArray<float>& LogicStartOffsets,
+    const TArray<UFileMediaSource*>& FMSs,
+    const TArray<FGiftUIDisplayConfig>& UIs,
+    const TArray<bool>& UseOrNot,
     float Interval,
     int32 RandomTimes,
     const FString& GiftName,
@@ -2444,6 +2459,9 @@ void UGiftVideoPool::EnqueueBoxTrigger(
         CallNames,
         GiftEnums,
         LogicStartOffsets,
+        FMSs,
+        UIs,
+        UseOrNot,
         Interval,
         RandomTimes * Multiplier,  // 倍率影响循环次数
         GiftName,
@@ -2509,6 +2527,9 @@ void UGiftVideoPool::EnqueueSpecialTrigger(
     const TArray<FString>& CallNames,
     const TArray<uint8>& GiftEnums,
     const TArray<float>& LogicStartOffsets,
+    const TArray<UFileMediaSource*>& FMSs,
+    const TArray<FGiftUIDisplayConfig>& UIs,
+    const TArray<bool>& UseOrNot,
     float Interval,
     int32 TriggerTime,
     const FString& GiftName,
@@ -2528,6 +2549,9 @@ void UGiftVideoPool::EnqueueSpecialTrigger(
         CallNames,
         GiftEnums,
         LogicStartOffsets,
+        FMSs,
+        UIs,
+        UseOrNot,
         Interval,
         TriggerTime * Multiplier,  // 倍率影响触发次数
         GiftName,
