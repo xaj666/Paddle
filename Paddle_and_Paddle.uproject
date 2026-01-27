@@ -25,5 +25,10 @@
 			"Name": "JsonBlueprintUtilities",
 			"Enabled": true
 		}
-	]
+	],
+	"TargetPlatforms": {
+		"Windows": {
+			"bExcludeMonolithicallyLocalizedAssets": true
+		}
+	}
 }
