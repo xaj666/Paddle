@@ -114,7 +114,7 @@ struct FSlot
     UPROPERTY()
     UMediaSoundComponent* SoundComp = nullptr;
     UPROPERTY()
-    UImage* VideoImage = nullptr;
+    UImage* VideoImage = nullptr; 
 
 
     // ��ǰʹ�õ� UI ����
@@ -617,7 +617,8 @@ private:
          */
         UFUNCTION(BlueprintCallable, Category = "GiftVideo|SingleGift")
         void EnqueueSingleGift(
-            const FSingleGiftRequest& Request,
+            const TArray<FSingleGiftRequest>& Request,
+            const uint8 GiftEnumforQueueTypeJudge,
             int32 PlayCount,
             float Interval,
             float SoundValue,

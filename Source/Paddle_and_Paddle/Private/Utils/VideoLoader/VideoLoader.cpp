@@ -2097,7 +2097,8 @@ UFileMediaSource* UGiftVideoPool::FindMediaSourceByName(const FString& VideoName
 // ========== [Claude] 单次礼物队列系统实现（按礼物类型分队列） ==========
 
 void UGiftVideoPool::EnqueueSingleGift(
-    const FSingleGiftRequest& Request,
+    const TArray<FSingleGiftRequest>& Request,
+    const uint8 GiftEnumforQueueTypeJudge,
     int32 PlayCount,
     float Interval,
     float SoundValue,
@@ -2109,19 +2110,19 @@ void UGiftVideoPool::EnqueueSingleGift(
         return;
     }
 
-    const uint8 GiftType = Request.GiftEnumValue;
+    const uint8 GiftType = GiftEnumforQueueTypeJudge;
 
     // [Claude] 构建播放项列表
     TArray<FSequentialPlayItem> NewItems;
     for (int32 i = 0; i < PlayCount; ++i)
     {
         FSequentialPlayItem Item;
-        Item.MediaSource = Request.MediaSource;
-        Item.GiftEnumValue = GiftType;
-        Item.UIConfig = Request.UIConfig;
-        Item.bUseCustomUIConfig = Request.bUseCustomUIConfig;
-        Item.LogicCallCount = Request.LogicCallCount;
-        Item.LogicDelayTime = Request.LogicDelayTime;
+        Item.MediaSource = Request[i].MediaSource;
+        Item.GiftEnumValue = Request[i].GiftEnumValue;
+        Item.UIConfig = Request[i].UIConfig;
+        Item.bUseCustomUIConfig = Request[i].bUseCustomUIConfig;
+        Item.LogicCallCount = Request[i].LogicCallCount;
+        Item.LogicDelayTime = Request[i].LogicDelayTime;
         Item.NoVideoDuration = Interval;
         Item.IntervalFromBar = Interval;
 
@@ -2402,12 +2403,22 @@ TArray<FSequentialPlayItem> UGiftVideoPool::BuildTriggerItems(
                 }
             }
             
-            int32 RandomIndex = FMath::RandRange(0, CallNames.Num() - 1);
+
+            static FRandomStream LocalRandomStream;
+            if (i == 0)               
+                LocalRandomStream.GenerateNewSeed();// 只在第一次循环时重新生成种子
+
+            // 使用本地随机流生成随机索引
+            int32 RandomIndex = LocalRandomStream.RandRange(0, CallNames.Num() - 1);
+
+            //int32 RandomIndex = FMath::RandRange(0, CallNames.Num() - 1);
+
+
             // [Claude] 查找视频源
             //UFileMediaSource* MediaSource = FindMediaSourceByName(CallNames[RandomIndex]);
             //同上
-            UFileMediaSource* MediaSource = (FMSs.IsValidIndex(i)) ? FMSs[i] : nullptr;
-            FGiftUIDisplayConfig UI = UIs[i];
+            UFileMediaSource* MediaSource = (FMSs.IsValidIndex(RandomIndex)) ? FMSs[RandomIndex] : nullptr;
+            FGiftUIDisplayConfig UI = UIs[RandomIndex];
 
             FSequentialPlayItem Item;
             Item.MediaSource = MediaSource;
@@ -2416,7 +2427,7 @@ TArray<FSequentialPlayItem> UGiftVideoPool::BuildTriggerItems(
             Item.LogicCallCount = 1;
             Item.LogicDelayTime = (LogicStartOffsets.IsValidIndex(RandomIndex)) ? LogicStartOffsets[RandomIndex] : 0.0f;
             Item.NoVideoDuration = Interval;
-            Item.bUseCustomUIConfig = UseOrNot[i];
+            Item.bUseCustomUIConfig = UseOrNot[RandomIndex];
             Item.IntervalFromBar = Interval;
             Item.bWaitForVideoEnd = false;
 
