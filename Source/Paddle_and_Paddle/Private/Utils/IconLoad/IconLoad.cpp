@@ -30,7 +30,9 @@ UTexture2D* AIconLoader::LoadTexture(const FString& path) {
 }
 
 TArray<UTexture2D*> AIconLoader::LoadTextures(const FString& Path) {
+	FIconStruct Icon_NameStruct;
 	TArray<UTexture2D*> TextureArray;
+	TArray<FString> NameArray;
 
 	if (!FPlatformFileManager::Get().GetPlatformFile().DirectoryExists(*Path))
 		return TextureArray;
@@ -44,12 +46,29 @@ TArray<UTexture2D*> AIconLoader::LoadTextures(const FString& Path) {
 	{
 		FString FullPath = Path / File;
 		if (UTexture2D* Texture = LoadTexture(FullPath))
-		{
 			TextureArray.Add(Texture);
-		}
 	}
 
 	return TextureArray;
+}
+
+
+TArray<FString> AIconLoader::LoadNames(const FString& Path) {
+
+	TArray<FString> NameArray;
+
+	if (!FPlatformFileManager::Get().GetPlatformFile().DirectoryExists(*Path))
+		return NameArray;
+
+	IFileManager& FileManager = IFileManager::Get();
+	TArray<FString> Files;
+	FileManager.FindFiles(Files, *Path, TEXT("*.png"));
+	FileManager.FindFiles(Files, *Path, TEXT("*.jpg"));
+
+	for (FString& File : Files)
+		NameArray.Add(File);
+
+	return NameArray;
 }
 
 
@@ -64,6 +83,11 @@ FString AIconLoader::GetIconFolderPath()
 	UE_LOG(LogTemp, Log, TEXT("[IconLoader] Icon folder path: %s"), *IconPath);
 
 	return IconPath;
+}
+
+TArray<FString> AIconLoader::LoadAllIconsName()
+{
+	return LoadNames(GetIconFolderPath());
 }
 
 TArray<UTexture2D*> AIconLoader::LoadAllIcons()

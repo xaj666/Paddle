@@ -5,6 +5,17 @@
 #include "CoreMinimal.h"
 #include "IconLoad.generated.h"
 
+USTRUCT(BlueprintType)
+struct FIconStruct {
+	GENERATED_BODY()
+
+	TArray<UTexture2D*> TextureArray;
+
+	TArray<FString> TextureNameArray;
+
+};
+
+
 UCLASS()
 class AIconLoader : public AActor {
 
@@ -17,11 +28,19 @@ public:
 	UFUNCTION(BlueprintCallable)
 	TArray<UTexture2D*> LoadTextures(const FString& path);
 
+	UFUNCTION(BlueprintCallable)
+	TArray<FString> LoadNames(const FString& path);
+
+
+
 	UFUNCTION(BlueprintPure, Category = "Icon")
 	static FString GetIconFolderPath();
 
 	UFUNCTION(BlueprintCallable, Category = "Icon")
 	TArray<UTexture2D*> LoadAllIcons();
+
+	UFUNCTION(BlueprintCallable, Category = "Icon")
+	TArray<FString> LoadAllIconsName();
 
 	TSharedPtr<class IImageWrapper> GetImageWarpper(const FString& path);
 };
